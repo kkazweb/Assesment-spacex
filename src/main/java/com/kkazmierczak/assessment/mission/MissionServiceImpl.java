@@ -1,14 +1,21 @@
 package com.kkazmierczak.assessment.mission;
 
 import com.kkazmierczak.assessment.rocket.Rocket;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@RequiredArgsConstructor
 class MissionServiceImpl implements MissionService {
+    private final MissionRepository missionRepository;
+
     @Override
     public Mission createNew(long missionId, String name) {
+        if(missionRepository.isExistingId(missionId)){
+            throw new IllegalArgumentException(String.format("Mission with id %d already exists.", missionId));
+        }
         return new Mission(missionId, name, Set.of());
     }
 

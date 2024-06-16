@@ -2,16 +2,31 @@ package com.kkazmierczak.assessment.mission;
 
 import com.kkazmierczak.assessment.rocket.Rocket;
 import com.kkazmierczak.assessment.rocket.RocketStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 class MissionServiceImplTest {
-    private final MissionService missionService = new MissionServiceImpl();
+    @Mock
+    private MissionRepository missionRepository;
+    private MissionService missionService;
     private final long MISSION_ID = 90532095L;
     private final String MISSION_NAME = "MISSION 342";
+
+    @BeforeEach
+    void setUp(){
+        MockitoAnnotations.openMocks(this);
+        missionService = new MissionServiceImpl(missionRepository);
+        when(missionRepository.findAll()).thenCallRealMethod();
+        when(missionRepository.isExistingId(anyLong())).thenCallRealMethod();
+    }
 
     @Test
     void createNew() {
@@ -46,7 +61,8 @@ class MissionServiceImplTest {
     void assignAssignedRocketThrowException(){
         var assignedRocket = new Rocket(33L, "Rocket 1", RocketStatus.ON_GROUND, true);
         var newMission = missionService.createNew(MISSION_ID, MISSION_NAME);
-        var illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> missionService.assignRocket(newMission, assignedRocket));
+        var illegalArgumentException = assertThrows(IllegalArgumentException.class,
+                () -> missionService.assignRocket(newMission, assignedRocket));
         assertEquals("Error while trying to assign rocket id 33 to mission id 90532095.", illegalArgumentException.getMessage());
     }
 
@@ -54,9 +70,18 @@ class MissionServiceImplTest {
     void assignRocketMissionEndedThrowException(){
         var assignedRocket = new Rocket(33L, "Rocket 1", RocketStatus.ON_GROUND, false);
         var newMission = new Mission(MISSION_ID, "Ended mission name", MissionStatus.ENDED, Set.of());
-        var illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> missionService.assignRocket(newMission, assignedRocket));
+        var illegalArgumentException = assertThrows(IllegalArgumentException.class,
+                () -> missionService.assignRocket(newMission, assignedRocket));
         assertEquals("Error while trying to assign rocket id 33 to mission id 90532095.", illegalArgumentException.getMessage());
     }
 
-
+    @Test
+    void createMissionMissionIdExists() {
+        var existingMissionId = 95832095L;
+        var missions = missionRepository.findAll();
+        assertTrue(missions.stream().anyMatch(mission -> mission.getMissionId() == existingMissionId));
+        var illegalArgumentException = assertThrows(IllegalArgumentException.class,
+                () -> missionService.createNew(existingMissionId, "Mission with this ID already exists."));
+        assertEquals("Mission with id 95832095 already exists.", illegalArgumentException.getMessage());
+    }
 }
