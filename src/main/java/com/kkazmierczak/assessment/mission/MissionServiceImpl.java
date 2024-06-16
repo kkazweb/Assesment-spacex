@@ -14,6 +14,10 @@ class MissionServiceImpl implements MissionService {
 
     @Override
     public Mission assignRocket(Mission mission, Rocket rocket) {
+        if(isRocketAssignable(mission, rocket)){
+            throw new IllegalArgumentException(String.format("Error while trying to assign rocket id %d to mission id %d.", rocket.getRocketId(), mission.getMissionId()));
+        }
+        rocket.setAssigned(true);
         var rockets = Stream.concat(
                         mission.getRockets().stream(),
                         Stream.of(rocket))
@@ -24,5 +28,10 @@ class MissionServiceImpl implements MissionService {
     @Override
     public Mission changeStatus(Mission mission, MissionStatus missionStatus) {
         return new Mission(mission.getMissionId(), mission.getName(), missionStatus, mission.getRockets());
+    }
+
+    private static boolean isRocketAssignable(Mission mission, Rocket rocket) {
+        return rocket.isAssigned() ||
+                MissionStatus.ENDED == mission.getMissionStatus();
     }
 }

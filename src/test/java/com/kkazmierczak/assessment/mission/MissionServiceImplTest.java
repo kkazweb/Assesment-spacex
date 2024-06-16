@@ -1,6 +1,7 @@
 package com.kkazmierczak.assessment.mission;
 
 import com.kkazmierczak.assessment.rocket.Rocket;
+import com.kkazmierczak.assessment.rocket.RocketStatus;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -28,6 +29,7 @@ class MissionServiceImplTest {
         assertEquals(MISSION_ID, assignedRocketMission.getMissionId());
         assertEquals(MISSION_NAME, assignedRocketMission.getName());
         assertEquals(Set.of(rocket), assignedRocketMission.getRockets());
+        assertTrue(assignedRocketMission.getRockets().stream().findFirst().get().isAssigned());
     }
 
     @Test
@@ -39,4 +41,22 @@ class MissionServiceImplTest {
         assertEquals(MISSION_NAME, changedStatusMission.getName());
         assertEquals(missionStatus, changedStatusMission.getMissionStatus());
     }
+
+    @Test
+    void assignAssignedRocketThrowException(){
+        var assignedRocket = new Rocket(33L, "Rocket 1", RocketStatus.ON_GROUND, true);
+        var newMission = missionService.createNew(MISSION_ID, MISSION_NAME);
+        var illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> missionService.assignRocket(newMission, assignedRocket));
+        assertEquals("Error while trying to assign rocket id 33 to mission id 90532095.", illegalArgumentException.getMessage());
+    }
+
+    @Test
+    void assignRocketMissionEndedThrowException(){
+        var assignedRocket = new Rocket(33L, "Rocket 1", RocketStatus.ON_GROUND, false);
+        var newMission = new Mission(MISSION_ID, "Ended mission name", MissionStatus.ENDED, Set.of());
+        var illegalArgumentException = assertThrows(IllegalArgumentException.class, () -> missionService.assignRocket(newMission, assignedRocket));
+        assertEquals("Error while trying to assign rocket id 33 to mission id 90532095.", illegalArgumentException.getMessage());
+    }
+
+
 }
