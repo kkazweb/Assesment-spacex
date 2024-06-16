@@ -4,7 +4,7 @@ import com.kkazmierczak.assessment.rocket.Rocket;
 
 public class MissionServiceImpl implements MissionService {
     @Override
-    public Mission add(long missionId) {
+    public Mission createNew(long missionId) {
         return null;
     }
 
