@@ -10,6 +10,9 @@ public class MissionViewerImpl implements MissionViewer {
 
     @Override
     public List<Mission> getMissionsByRocketsAssignedDescending() {
-        return null;
+        var allMissions = missionRepository.findAll();
+        return allMissions.stream()
+                .sorted()
+                .toList();
     }
 }
