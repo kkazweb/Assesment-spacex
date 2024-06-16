@@ -9,11 +9,13 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode(of = {"rocketId"})
 public class Rocket {
-    private long rocketId;
+    private final long rocketId;
+    private final String name;
     private RocketStatus rocketStatus;
 
-    public Rocket(long rocketId) {
+    public Rocket(long rocketId, String name) {
         this.rocketId = rocketId;
+        this.name = name;
         this.rocketStatus = RocketStatus.ON_GROUND;
     }
 }

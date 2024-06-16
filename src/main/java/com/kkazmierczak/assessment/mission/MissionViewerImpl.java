@@ -1,10 +1,15 @@
 package com.kkazmierczak.assessment.mission;
 
-import java.util.Set;
+import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 public class MissionViewerImpl implements MissionViewer {
+    private final MissionRepository missionRepository;
+
     @Override
-    public Set<Mission> getMissionsByRocketsAssigned(long rockets) {
+    public List<Mission> getMissionsByRocketsAssignedDescending() {
         return null;
     }
 }

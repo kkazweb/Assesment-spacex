@@ -1,7 +1,7 @@
 package com.kkazmierczak.assessment.mission;
 
-import java.util.Set;
+import java.util.List;
 
 interface MissionViewer {
-    Set<Mission> getMissionsByRocketsAssigned(long rockets);
+    List<Mission> getMissionsByRocketsAssignedDescending();
 }

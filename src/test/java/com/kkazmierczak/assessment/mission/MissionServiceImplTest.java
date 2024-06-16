@@ -21,10 +21,11 @@ class MissionServiceImplTest {
 
     @Test
     void assignRocket() {
-        var rocket = new Rocket(9583295L);
+        var rocket = new Rocket(9583295L, "Rocket 1");
         var newMission = missionService.createNew(MISSION_ID);
         var mission = missionService.assignRocket(newMission, rocket);
         assertEquals(MISSION_ID, mission.getMissionId());
+        assertEquals("Rocket 1", mission.getName());
         assertEquals(Set.of(rocket), mission.getRockets());
     }
 
