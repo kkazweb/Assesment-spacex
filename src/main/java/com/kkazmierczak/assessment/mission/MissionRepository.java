@@ -6,7 +6,7 @@ import com.kkazmierczak.assessment.rocket.RocketStatus;
 import java.util.List;
 import java.util.Set;
 
-interface MissionRepository {
+public interface MissionRepository {
     default List<Mission> findAll() {
         return List.of(
                 new Mission(95832095L,

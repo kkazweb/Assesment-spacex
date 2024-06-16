@@ -1,5 +1,6 @@
-package com.kkazmierczak.assessment.mission;
+package com.kkazmierczak.assessment.mission.summary;
 
+import com.kkazmierczak.assessment.mission.MissionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -8,16 +9,16 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-class MissionViewerImplTest {
+class MissionSummaryServiceImplTest {
 
     @Mock
     private MissionRepository missionRepository;
-    private MissionViewer missionViewer;
+    private MissionSummaryService missionViewer;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        missionViewer = new MissionViewerImpl(missionRepository);
+        missionViewer = new MissionSummaryServiceImpl(missionRepository);
         when(missionRepository.findAll()).thenCallRealMethod();
     }
 

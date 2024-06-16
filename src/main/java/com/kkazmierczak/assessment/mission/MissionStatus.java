@@ -1,6 +1,6 @@
 package com.kkazmierczak.assessment.mission;
 
-enum MissionStatus {
+public enum MissionStatus {
     SCHEDULED,
     PENDING,
     IN_PROGRESS,
