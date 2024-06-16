@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class MissionViewerImpl implements MissionViewer {
+class MissionViewerImpl implements MissionViewer {
     private final MissionRepository missionRepository;
 
     @Override

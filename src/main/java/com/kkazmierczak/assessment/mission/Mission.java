@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @EqualsAndHashCode(of = {"missionId"})
 @AllArgsConstructor
-public class Mission implements Comparable<Mission>{
+class Mission implements Comparable<Mission>{
     private final long missionId;
     private final String name;
     private final MissionStatus missionStatus;

@@ -11,7 +11,7 @@ import lombok.Getter;
 public class Rocket {
     private final long rocketId;
     private final String name;
-    private RocketStatus rocketStatus;
+    private final RocketStatus rocketStatus;
 
     public Rocket(long rocketId, String name) {
         this.rocketId = rocketId;
