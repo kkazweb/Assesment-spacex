@@ -23,8 +23,8 @@ class MissionSummaryServiceImplTest {
     }
 
     @Test
-    void getMissionsByRocketsAssignedDescending() {
-        var allMissions = missionViewer.getMissionsByRocketsAssignedDescending();
+    void getMissionsByRocketsDescending() {
+        var allMissions = missionViewer.getMissionsByRocketsDescending();
         assertEquals(6, allMissions.size());
         assertEquals("Transit", allMissions.get(0).getName());
         assertEquals("Luna1", allMissions.get(1).getName());

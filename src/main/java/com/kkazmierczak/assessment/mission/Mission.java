@@ -25,14 +25,10 @@ public class Mission implements Comparable<Mission>{
         this.rockets = rockets;
     }
 
-    public int getNumberOfRockets(){
-        return this.rockets.size();
-    }
-
     @Override
     public int compareTo(Mission o){
         return ComparisonChain.start()
-                .compare(this.getNumberOfRockets(), o.getNumberOfRockets(), Ordering.natural().reverse())
+                .compare(this.rockets.size(), o.rockets.size(), Ordering.natural().reverse())
                 .compare(this.getName(), o.getName(), Ordering.natural().reverse())
                 .result();
 

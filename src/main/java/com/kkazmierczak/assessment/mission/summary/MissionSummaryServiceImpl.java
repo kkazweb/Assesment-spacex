@@ -11,7 +11,7 @@ class MissionSummaryServiceImpl implements MissionSummaryService {
     private final MissionRepository missionRepository;
 
     @Override
-    public List<Mission> getMissionsByRocketsAssignedDescending() {
+    public List<Mission> getMissionsByRocketsDescending() {
         var allMissions = missionRepository.findAll();
         return allMissions.stream()
                 .sorted()

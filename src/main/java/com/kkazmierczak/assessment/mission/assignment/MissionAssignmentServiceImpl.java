@@ -11,7 +11,7 @@ class MissionAssignmentServiceImpl implements MissionAssignmentService {
 
     @Override
     public Mission assignRocket(Mission mission, Rocket rocket) {
-        if(isAssignable(mission, rocket)){
+        if(isNotAssignable(mission, rocket)){
             throw new IllegalArgumentException(String.format("Error while trying to assign rocket id %d to mission id %d.", rocket.getRocketId(), mission.getMissionId()));
         }
         rocket.setAssigned(true);
@@ -22,7 +22,7 @@ class MissionAssignmentServiceImpl implements MissionAssignmentService {
         return new Mission(mission.getMissionId(), mission.getName(), mission.getMissionStatus(), rockets);
     }
 
-    private boolean isAssignable(Mission mission, Rocket rocket) {
+    private boolean isNotAssignable(Mission mission, Rocket rocket) {
         return rocket.isAssigned() ||
                 MissionStatus.ENDED == mission.getMissionStatus();
     }
